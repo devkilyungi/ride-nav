@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "620530627020",
+    "project_id": "ridenav-e3fed",
+    "storage_bucket": "ridenav-e3fed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620530627020:android:f7f15a003611075be3ed69",
+        "android_client_info": {
+          "package_name": "com.example.ridenav"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnd2MCkxcxAQtJdw3PtfRXGUJVN6GPdRA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
