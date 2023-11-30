@@ -17,6 +17,14 @@ import kotlinx.coroutines.delay
 
 fun String.isValidEmail(): Boolean = android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
 
+fun String.isLicensePlateValid(): Boolean {
+    // Define the regex pattern for the license plate format with a space
+    val licensePlatePattern = Regex("^[A-Z][A-Z][A-Z] \\d{3}[A-Z]$")
+
+    // Check if the string matches the defined pattern
+    return licensePlatePattern.matches(this)
+}
+
 // Check for internet connection
 fun checkConnection(context: Context): Boolean {
     val connectivityManager =

@@ -1,6 +1,8 @@
 package com.example.ridenav.presentation.screens.sign_up
 
+import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -22,7 +24,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val application: Application
 ) : ViewModel() {
 
     // Email and password fields text states
@@ -104,19 +107,22 @@ class SignUpViewModel @Inject constructor(
                         is Resource.Success -> {
                             isLoading = false
                             signUpAnimationJob?.cancelAndJoin()
-                            buttonText = "Sign in"
+                            buttonText = "Sign up"
 
                             navController.apply {
                                 popBackStack()
-                                navigate(Screen.LoginScreen.route)
+                                navigate(Screen.UserDetailsScreen.route)
                             }
+
+                            Toast.makeText(application, "Account created successfully!", Toast.LENGTH_SHORT)
+                                .show()
                         }
 
                         is Resource.Error -> {
                             isLoading = false
                             showInformationNotice("An error occurred: ${result.message}")
                             signUpAnimationJob?.cancelAndJoin()
-                            buttonText = "Sign in"
+                            buttonText = "Sign up"
                             Log.d("TAG", "signIn: ${result.message}")
                         }
                     }
