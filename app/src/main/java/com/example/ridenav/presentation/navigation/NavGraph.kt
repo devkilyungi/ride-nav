@@ -4,9 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.ridenav.presentation.screens.sign_up.SignUpScreen
 import com.example.ridenav.presentation.screens.home.HomeScreen
 import com.example.ridenav.presentation.screens.login.LoginScreen
+import com.example.ridenav.presentation.screens.sign_up.SignUpScreen
+import com.example.ridenav.presentation.screens.sign_up.UserDetailsScreen
 
 @Composable
 fun SetUpNavGraph(
@@ -24,6 +25,9 @@ fun SetUpNavGraph(
         }
         composable(route = Screen.HomeScreen.route) {
             HomeScreen(navController)
+        }
+        composable(route = Screen.UserDetailsScreen.route) {
+            UserDetailsScreen(navController = navController)
         }
 
     }

@@ -1,6 +1,8 @@
 package com.example.ridenav.presentation.screens.login
 
+import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -23,7 +25,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginScreenViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val application: Application
 ) : ViewModel() {
 
     // Email and password fields text states
@@ -111,6 +114,9 @@ class LoginScreenViewModel @Inject constructor(
                                 popBackStack()
                                 navigateOnce(Screen.HomeScreen.route)
                             }
+
+                            Toast.makeText(application, "Login successful!", Toast.LENGTH_SHORT)
+                                .show()
                         }
 
                         is Resource.Error -> {
