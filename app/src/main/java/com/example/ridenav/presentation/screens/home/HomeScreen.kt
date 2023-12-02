@@ -16,18 +16,22 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.ridenav.data.dto.LocationDetails
 import com.example.ridenav.presentation.navigation.BottomBarScreen
 import com.example.ridenav.presentation.navigation.HomeNavGraph
 
 @Composable
-fun HomeScreen(navController: NavHostController = rememberNavController()) {
+fun HomeScreen(
+    navController: NavHostController = rememberNavController(),
+    location: LocationDetails?
+) {
     Scaffold(
         bottomBar = {
                 BottomBar(navController = navController)
 
         }
     ) { innerPadding ->
-        HomeNavGraph(navController = navController, Modifier.padding(innerPadding))
+        HomeNavGraph(navController = navController, Modifier.padding(innerPadding), location)
     }
 }
 

@@ -4,11 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.ridenav.data.dto.LocationDetails
 import com.example.ridenav.presentation.screens.home.HomeScreen
 
 @Composable
 fun RootNavGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    location: LocationDetails?
 ) {
     NavHost(
         navController = navController,
@@ -17,7 +19,7 @@ fun RootNavGraph(
     ) {
         authNavGraph(navController = navController)
         composable(route = Graph.HOME) {
-            HomeScreen()
+            HomeScreen(location = location)
         }
     }
 }

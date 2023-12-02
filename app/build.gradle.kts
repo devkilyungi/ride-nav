@@ -75,9 +75,11 @@ dependencies {
     implementation("androidx.compose.material:material:1.5.4")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.navigation:navigation-compose:2.7.5")
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
 
     // Accompanist
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
+    implementation("com.google.accompanist:accompanist-permissions:0.31.1-alpha")
 
     // ViewModel Compose
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
