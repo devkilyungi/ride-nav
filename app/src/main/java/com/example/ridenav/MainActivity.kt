@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.ridenav.presentation.navigation.SetUpNavGraph
+import com.example.ridenav.presentation.navigation.RootNavGraph
 import com.example.ridenav.presentation.theme.RideNavTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             RideNavTheme {
                 navController = rememberNavController()
-                SetUpNavGraph(navController = navController)
+                RootNavGraph(navController = rememberNavController())
             }
         }
     }

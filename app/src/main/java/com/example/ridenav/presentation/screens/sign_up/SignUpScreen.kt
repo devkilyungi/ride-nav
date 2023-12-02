@@ -46,7 +46,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.example.ridenav.presentation.components.Notice
 import com.example.ridenav.presentation.screens.login.components.TextInput
 
@@ -55,7 +54,8 @@ import com.example.ridenav.presentation.screens.login.components.TextInput
 fun SignUpScreen(
     viewModel: SignUpViewModel = hiltViewModel(),
     focusManager: FocusManager = LocalFocusManager.current,
-    navController: NavController
+    onBackClick: () -> Unit,
+    onSignUpClick: () -> Unit
 ) {
 
     Surface(
@@ -89,7 +89,7 @@ fun SignUpScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                 ) {
-                    IconButton(onClick = { navController.popBackStack() }) {
+                    IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Back button"
@@ -151,7 +151,7 @@ fun SignUpScreen(
                         keyboardType = KeyboardType.Password,
                         imeAction = ImeAction.Done,
                     ),
-                    onDone = { viewModel.registerUser(navController) },
+                    onDone = { viewModel.registerUser(onSignUpClick) },
                     isPassword = true,
                     passwordVisibility = viewModel.passwordVisibility,
                     onPasswordVisibilityChanged = {
@@ -167,7 +167,7 @@ fun SignUpScreen(
                 Button(
                     onClick = {
                         focusManager.clearFocus()
-                        viewModel.registerUser(navController)
+                        viewModel.registerUser(onSignUpClick)
                     },
                     shape = MaterialTheme.shapes.medium,
                     modifier = Modifier

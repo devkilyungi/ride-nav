@@ -48,9 +48,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.example.ridenav.presentation.components.Notice
-import com.example.ridenav.presentation.navigation.Screen
 import com.example.ridenav.presentation.screens.login.components.TextInput
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -58,7 +56,8 @@ import com.example.ridenav.presentation.screens.login.components.TextInput
 fun LoginScreen(
     viewModel: LoginScreenViewModel = hiltViewModel(),
     focusManager: FocusManager = LocalFocusManager.current,
-    navController: NavController
+    onLoginClick: () -> Unit,
+    onSignUpClick: () -> Unit,
 ) {
 
     Surface(
@@ -144,7 +143,7 @@ fun LoginScreen(
                         keyboardType = KeyboardType.Password,
                         imeAction = ImeAction.Done,
                     ),
-                    onDone = { viewModel.loginUser(navController) },
+                    onDone = { viewModel.loginUser(onLoginClick) },
                     isPassword = true,
                     passwordVisibility = viewModel.passwordVisibility,
                     onPasswordVisibilityChanged = {
@@ -174,7 +173,7 @@ fun LoginScreen(
                 Button(
                     onClick = {
                         focusManager.clearFocus()
-                        viewModel.loginUser(navController)
+                        viewModel.loginUser(onLoginClick)
                     },
                     shape = MaterialTheme.shapes.medium,
                     modifier = Modifier
@@ -226,7 +225,7 @@ fun LoginScreen(
                 ) {
                     Text(text = "Don't have an account?")
 
-                    TextButton(onClick = { navController.navigate(Screen.SignUpScreen.route) }) {
+                    TextButton( onClick = onSignUpClick ) {
                         Text(text = "Sign up")
                     }
                 }

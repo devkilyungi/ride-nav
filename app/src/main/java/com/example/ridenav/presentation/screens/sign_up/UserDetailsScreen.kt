@@ -34,7 +34,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.example.ridenav.presentation.components.Notice
 import com.example.ridenav.presentation.screens.login.components.TextInput
 
@@ -45,7 +44,8 @@ class UserDetailsScreen {
 fun UserDetailsScreen(
     viewModel: UserDetailsScreenViewModel = hiltViewModel(),
     focusManager: FocusManager = LocalFocusManager.current,
-    navController: NavController
+    onBackClick: () -> Unit,
+    onFinishClick: () -> Unit
 ) {
 
     Surface(
@@ -79,7 +79,7 @@ fun UserDetailsScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                 ) {
-                    IconButton(onClick = { navController.popBackStack() }) {
+                    IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Back button"
@@ -176,7 +176,7 @@ fun UserDetailsScreen(
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Done,
                     ),
-                    onDone = { viewModel.addUserDetails(navController) }
+                    onDone = { viewModel.addUserDetails(onFinishClick) }
                 )
 
                 Spacer(modifier = Modifier.height(30.dp))
@@ -185,7 +185,7 @@ fun UserDetailsScreen(
                 Button(
                     onClick = {
                         focusManager.clearFocus()
-                        viewModel.addUserDetails(navController = navController)
+                        viewModel.addUserDetails(onFinishClick)
                     },
                     shape = MaterialTheme.shapes.medium,
                     modifier = Modifier

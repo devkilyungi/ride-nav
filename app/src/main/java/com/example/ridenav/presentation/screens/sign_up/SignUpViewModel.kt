@@ -9,11 +9,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import com.example.ridenav.common.Resource
 import com.example.ridenav.common.isValidEmail
 import com.example.ridenav.domain.repository.AuthRepository
-import com.example.ridenav.presentation.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
@@ -83,7 +81,7 @@ class SignUpViewModel @Inject constructor(
         return !emailError && !passwordError
     }
 
-    fun registerUser(navController: NavController) = viewModelScope.launch {
+    fun registerUser(onSignUpClick: () -> Unit) = viewModelScope.launch {
 
         if (!isLoading && !noticeVisible && isValidForm()) {
             authRepository.registerUser(email = email.text, password = password.text)
@@ -109,10 +107,7 @@ class SignUpViewModel @Inject constructor(
                             signUpAnimationJob?.cancelAndJoin()
                             buttonText = "Sign up"
 
-                            navController.apply {
-                                popBackStack()
-                                navigate(Screen.UserDetailsScreen.route)
-                            }
+                            onSignUpClick()
 
                             Toast.makeText(application, "Account created successfully!", Toast.LENGTH_SHORT)
                                 .show()

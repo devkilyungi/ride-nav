@@ -9,12 +9,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import com.example.ridenav.common.Resource
 import com.example.ridenav.common.isValidEmail
-import com.example.ridenav.common.navigateOnce
 import com.example.ridenav.domain.repository.AuthRepository
-import com.example.ridenav.presentation.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
@@ -84,7 +81,7 @@ class LoginScreenViewModel @Inject constructor(
         return !emailError && !passwordError
     }
 
-    fun loginUser(navController: NavController) = viewModelScope.launch {
+    fun loginUser(onLoginClick: () -> Unit) = viewModelScope.launch {
 
         if (!isLoading && !noticeVisible && isValidForm()) {
             authRepository.loginUser(email = email.text, password = password.text)
@@ -110,10 +107,7 @@ class LoginScreenViewModel @Inject constructor(
                             loginAnimationJob?.cancelAndJoin()
                             buttonText = "Sign in"
 
-                            navController.apply {
-                                popBackStack()
-                                navigateOnce(Screen.HomeScreen.route)
-                            }
+                            onLoginClick()
 
                             Toast.makeText(application, "Login successful!", Toast.LENGTH_SHORT)
                                 .show()

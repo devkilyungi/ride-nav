@@ -9,10 +9,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import com.example.ridenav.common.isLicensePlateValid
 import com.example.ridenav.data.dto.Driver
-import com.example.ridenav.presentation.navigation.Screen
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -85,7 +83,7 @@ class UserDetailsScreenViewModel @Inject constructor(
         return !firstNameError && !lastNameError && !vehicleTypeError && !licencePlateError
     }
 
-    fun addUserDetails(navController: NavController) = viewModelScope.launch {
+    fun addUserDetails(onFinishClick: () -> Unit) = viewModelScope.launch {
 
         if (!isLoading && !noticeVisible && isValidForm()) {
             val dB: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -102,10 +100,8 @@ class UserDetailsScreenViewModel @Inject constructor(
                 .addOnSuccessListener {
                     Log.d("TAG", "put details succeeded")
 
-                    navController.apply {
-                        popBackStack()
-                        navigate(Screen.LoginScreen.route)
-                    }
+                    onFinishClick()
+
                     Toast.makeText(application, "Account details saved!", Toast.LENGTH_SHORT)
                         .show()
                 }
