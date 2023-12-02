@@ -76,6 +76,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.navigation:navigation-compose:2.7.5")
     implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
+    implementation("io.coil-kt:coil-compose:2.5.0")
 
     // Accompanist
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
