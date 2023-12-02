@@ -27,8 +27,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
 
         }
     ) { innerPadding ->
-        Modifier.padding(innerPadding)
-        HomeNavGraph(navController = navController)
+        HomeNavGraph(navController = navController, Modifier.padding(innerPadding))
     }
 }
 

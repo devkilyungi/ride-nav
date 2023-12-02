@@ -1,6 +1,7 @@
 package com.example.ridenav.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -12,14 +13,14 @@ import com.example.ridenav.presentation.screens.home.HistoryScreen
 import com.example.ridenav.presentation.screens.home.MapScreen
 
 @Composable
-fun HomeNavGraph(navController: NavHostController) {
+fun HomeNavGraph(navController: NavHostController, padding: Modifier) {
     NavHost(
         navController = navController,
         route = Graph.HOME,
         startDestination = BottomBarScreen.Home.route
     ) {
         composable(route = BottomBarScreen.Home.route) {
-            MapScreen()
+            MapScreen(padding)
         }
         composable(route = BottomBarScreen.History.route) {
             HistoryScreen()
