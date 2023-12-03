@@ -3,6 +3,7 @@ package com.example.ridenav.data.repository
 import android.app.Application
 import com.example.ridenav.R
 import com.example.ridenav.common.Resource
+import com.example.ridenav.data.remote.RideNavApi
 import com.example.ridenav.domain.repository.AuthRepository
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
-    private val appContext: Application
+    private val appContext: Application,
+    private val api: RideNavApi
 ): AuthRepository {
 
     init {

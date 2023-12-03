@@ -12,16 +12,22 @@ import com.example.ridenav.presentation.screens.home.AccountManagementScreen
 import com.example.ridenav.presentation.screens.home.AccountScreen
 import com.example.ridenav.presentation.screens.home.HistoryScreen
 import com.example.ridenav.presentation.screens.home.MapScreen
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 @Composable
-fun HomeNavGraph(navController: NavHostController, padding: Modifier, location: LocationDetails?) {
+fun HomeNavGraph(
+    navController: NavHostController,
+    padding: Modifier,
+    location: LocationDetails?
+) {
     NavHost(
         navController = navController,
         route = Graph.HOME,
         startDestination = BottomBarScreen.Home.route
     ) {
         composable(route = BottomBarScreen.Home.route) {
-            MapScreen(padding, location)
+            MapScreen(padding = padding, location = location)
         }
         composable(route = BottomBarScreen.History.route) {
             HistoryScreen()
@@ -32,8 +38,7 @@ fun HomeNavGraph(navController: NavHostController, padding: Modifier, location: 
                     navController.navigate(Graph.SETTINGS)
                 },
                 onSignOut = {
-                    navController.popBackStack()
-                    navController.navigate(Graph.AUTHENTICATION)
+                    Firebase.auth.signOut()
                 }
             )
         }

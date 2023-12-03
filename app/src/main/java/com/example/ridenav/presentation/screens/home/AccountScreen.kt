@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -58,8 +60,6 @@ fun AccountScreen(
         .addOnFailureListener { exception ->
             Log.d("TAG", "Error getting document: ", exception)
         }
-
-
 
     Surface(
         modifier = Modifier
@@ -158,6 +158,16 @@ fun AccountScreen(
                         modifier = Modifier.weight(1f)
                     )
                 }
+            }
+
+            Button(
+                onClick = { onSignOut() },
+                shape = androidx.compose.material3.MaterialTheme.shapes.medium,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+            ) {
+                Text(text = "Sign Out")
             }
         }
     }

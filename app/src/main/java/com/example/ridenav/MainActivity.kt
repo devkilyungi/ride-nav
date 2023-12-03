@@ -160,7 +160,7 @@ class MainActivity : ComponentActivity() {
                 }
 
                 navController = rememberNavController()
-                RootNavGraph(navController = rememberNavController(), location)
+                RootNavGraph(navController = rememberNavController(), location, auth)
 
                 if (shouldShowPermissionRationale) {
                     LaunchedEffect(Unit) {
