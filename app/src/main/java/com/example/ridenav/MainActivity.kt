@@ -1,5 +1,6 @@
 package com.example.ridenav
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -27,6 +28,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.ridenav.presentation.navigation.RootNavGraph
 import com.example.ridenav.presentation.theme.RideNavTheme
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -37,7 +43,20 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var applicationViewModel: ApplicationViewModel
 
-//    private val applicationViewModel: ApplicationViewModel = ApplicationViewModel(RideNavApp())
+    var auth = FirebaseAuth.getInstance()
+    var firestore = Firebase.firestore
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        val dB: FirebaseFirestore = FirebaseFirestore.getInstance()
+        val dbDriverLocation: CollectionReference = dB.collection("driverLocation")
+
+        dbDriverLocation.document("${auth.currentUser?.uid}")
+            .delete()
+            .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
+            .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +66,25 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             val location by applicationViewModel.getLocationLiveData().observeAsState()
+
+            val dB: FirebaseFirestore = FirebaseFirestore.getInstance()
+            val dbDriverLocation: CollectionReference = dB.collection("driverLocation")
+
+            // store driver location
+            val driverLocation = hashMapOf(
+                "lat" to "${location?.latitude}",
+                "long" to "${location?.longitude}",
+            )
+
+            dbDriverLocation.document("${auth.currentUser?.uid}")
+                .set(driverLocation)
+                .addOnSuccessListener {
+                    Log.d("TAG", "driver location added")
+                }
+                .addOnFailureListener { e ->
+                    Log.d("TAG", "driver location add failed: ${e.message}")
+                }
+
 
             var locationPermissionsGranted by remember {
                 mutableStateOf(

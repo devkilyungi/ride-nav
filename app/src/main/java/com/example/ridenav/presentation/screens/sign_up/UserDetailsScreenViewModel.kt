@@ -10,9 +10,11 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ridenav.common.isLicensePlateValid
-import com.example.ridenav.data.dto.Driver
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,6 +23,9 @@ import javax.inject.Inject
 class UserDetailsScreenViewModel @Inject constructor(
     private val application: Application
 ) : ViewModel() {
+
+    var auth = FirebaseAuth.getInstance()
+    var firestore = Firebase.firestore
 
     // Input fields text states
     var firstName by mutableStateOf(TextFieldValue(""))
@@ -89,14 +94,16 @@ class UserDetailsScreenViewModel @Inject constructor(
             val dB: FirebaseFirestore = FirebaseFirestore.getInstance()
             val dbUsers: CollectionReference = dB.collection("drivers")
 
-            val driver = Driver(
-                firstName = firstName.text,
-                lastName = lastName.text,
-                vehicleType = vehicleType.text,
-                licencePlate = licencePlate.text
+            val driver = hashMapOf(
+                "email" to "${auth.currentUser?.email}",
+                "firstName" to "${firstName.text}",
+                "lastName" to "${lastName.text}",
+                "vehicleType" to "${vehicleType.text}",
+                "licencePlate" to "${licencePlate.text}"
             )
 
-            dbUsers.add(driver)
+            dbUsers.document("${auth.currentUser?.uid}")
+                .set(driver)
                 .addOnSuccessListener {
                     Log.d("TAG", "put details succeeded")
 

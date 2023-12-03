@@ -45,7 +45,7 @@ fun MapScreen(padding: Modifier, location: LocationDetails?) {
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
             cameraPositionState = cameraPositionState,
-                    properties = properties,
+            properties = properties,
             uiSettings = uiSettings
         ) {
             Circle(
